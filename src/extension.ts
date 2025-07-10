@@ -7,6 +7,7 @@ import generate from '@babel/generator';
 import { parse } from '@babel/parser';
 import traverse from '@babel/traverse';
 import * as t from '@babel/types';
+import { formatComponentName } from './helper/formatComponentName';
 
 async function convertSvgToComponent(uri: vscode.Uri) {
   const svgPath = uri.fsPath;
@@ -14,6 +15,7 @@ async function convertSvgToComponent(uri: vscode.Uri) {
   const outputDir = config.get<string>('outputDir', '.');
   const useTypescript = config.get<boolean>('typescript', false);
   const useNative = config.get<boolean>('native', false);
+  const namePrefix = config.get<string>('componentNamePrefix', '');
 
   const svgrOptions = {
     native: useNative,
@@ -26,10 +28,9 @@ async function convertSvgToComponent(uri: vscode.Uri) {
   };
 
   const svgContent = await fs.readFile(svgPath, 'utf-8');
-  const componentName = path
-    .basename(svgPath, '.svg')
-    .replace(/[^a-zA-Z0-9]/g, '')
-    .replace(/^\w/, (c) => c.toUpperCase());
+
+  const baseName = path.basename(svgPath, '.svg');
+  const componentName = formatComponentName(baseName, namePrefix);
 
   const componentCode = await transform(svgContent, svgrOptions, {
     componentName,

@@ -102,6 +102,11 @@
           ],
           "default": "default",
           "description": "The type of export to use (default or named)."
+        },
+        "svgreact.componentNamePrefix": {
+          "type": "string",
+          "default": "",
+          "description": "A prefix to add to the generated component name (e.g., 'Icon')."
         }
       }
     }
