@@ -1,26 +1,46 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+import { transform } from '@svgr/core';
+import { promises as fs } from 'fs';
+import * as path from 'path';
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  const disposable = vscode.commands.registerCommand(
+    'svgreact.convertFile',
+    async (uri: vscode.Uri) => {
+      const svgPath = uri.fsPath;
+      const svgContent = await fs.readFile(svgPath, 'utf-8');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "svgreact" is now active!');
+      const componentName = path
+        .basename(svgPath, '.svg')
+        .replace(/[^a-zA-Z0-9]/g, '')
+        .replace(/^\w/, (c) => c.toUpperCase());
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('svgreact.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from SVGReact!');
-	});
+      try {
+        const jsx = await transform(
+          svgContent,
+          {
+            icon: true,
+            plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+          },
+          { componentName }
+        );
 
-	context.subscriptions.push(disposable);
+        const newFilePath = path.join(
+          path.dirname(svgPath),
+          `${componentName}.jsx`
+        );
+        await fs.writeFile(newFilePath, jsx);
+
+        vscode.window.showInformationMessage(
+          `Successfully created ${componentName}.jsx`
+        );
+      } catch (e) {
+        vscode.window.showErrorMessage(`SVGR conversion failed: ${e}`);
+      }
+    }
+  );
+
+  context.subscriptions.push(disposable);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
