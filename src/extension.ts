@@ -56,14 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
           .replace(/[^a-zA-Z0-9]/g, '')
           .replace(/^\w/, (c) => c.toUpperCase());
 
-        const jsx = await transform(
-          svgContent,
-          {
-            icon: true,
-            plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
-          },
-          { componentName }
-        );
+        const jsx = await transform(svgContent, svgrOptions, { componentName });
 
         const fileExtension = useTypescript ? '.tsx' : '.jsx';
         const outputFilename = `${componentName}${fileExtension}`;
