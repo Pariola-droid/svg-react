@@ -12,7 +12,8 @@
   "activationEvents": [
     "onCommand:svgreact.convertFile",
     "onCommand:svgreact.preview",
-    "onCommand:svgreact.refactor"
+    "onCommand:svgreact.refactor",
+    "onCommand:svgreact.refactorSelection"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -27,7 +28,11 @@
       },
       {
         "command": "svgreact.refactor",
-        "title": "SVGR: Refactor Inline SVGs"
+        "title": "SVGR: Refactor Inline SVGs in File"
+      },
+      {
+        "command": "svgreact.refactorSelection",
+        "title": "SVGR: Refactor Selected SVG"
       }
     ],
     "menus": {
@@ -45,6 +50,13 @@
         {
           "when": "resourceExtname == .jsx || resourceExtname == .tsx",
           "command": "svgreact.refactor",
+          "group": "2_refactor"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
+          "command": "svgreact.refactorSelection",
           "group": "2_refactor"
         }
       ]
