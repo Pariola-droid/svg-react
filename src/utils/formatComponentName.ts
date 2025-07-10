@@ -1,3 +1,10 @@
+/**
+ * Formats a filename into a valid React component name in PascalCase.
+ * @param originalName The base name of the file (e.g., 'icon-find').
+ * @param prefix A prefix to add to the name (e.g., 'Icon').
+ * @returns The formatted component name (e.g., 'IconIconFind').
+ */
+
 export function formatComponentName(
   originalName: string,
   prefix: string
