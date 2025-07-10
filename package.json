@@ -28,6 +28,36 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "SVGReact",
+      "properties": {
+        "svgreact.outputDir": {
+          "type": "string",
+          "default": ".",
+          "description": "Specifies the output directory for generated components. Use '.' for the same directory as the SVG."
+        },
+        "svgreact.typescript": {
+          "type": "boolean",
+          "default": false,
+          "description": "Output a TypeScript component (.tsx) with typed props."
+        },
+        "svgreact.memo": {
+          "type": "boolean",
+          "default": false,
+          "description": "Wrap the generated component in React.memo()."
+        },
+        "svgreact.ref": {
+          "type": "boolean",
+          "default": false,
+          "description": "Forward a ref to the underlying SVG element."
+        },
+        "svgreact.icon": {
+          "type": "boolean",
+          "default": true,
+          "description": "Set a default '1em' height and width for icon scaling."
+        }
+      }
     }
   },
   "scripts": {
@@ -62,6 +92,7 @@
   "dependencies": {
     "@svgr/core": "^6.5.1",
     "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-prettier": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0"
   }
 }

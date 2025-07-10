@@ -34,6 +34,22 @@ export function activate(context: vscode.ExtensionContext) {
       const svgPath = uri.fsPath;
 
       try {
+        const config = vscode.workspace.getConfiguration('svgreact');
+        const outputDir = config.get<string>('outputDir', '.');
+        const useTypescript = config.get<boolean>('typescript', false);
+
+        const svgrOptions = {
+          icon: config.get<boolean>('icon', true),
+          memo: config.get<boolean>('memo', false),
+          ref: config.get<boolean>('ref', false),
+          typescript: useTypescript,
+          plugins: [
+            '@svgr/plugin-svgo',
+            '@svgr/plugin-jsx',
+            '@svgr/plugin-prettier',
+          ],
+        };
+
         const svgContent = await fs.readFile(svgPath, 'utf-8');
         const componentName = path
           .basename(svgPath, '.svg')
@@ -49,10 +65,17 @@ export function activate(context: vscode.ExtensionContext) {
           { componentName }
         );
 
-        const newFilePath = path.join(
-          path.dirname(svgPath),
-          `${componentName}.jsx`
-        );
+        const fileExtension = useTypescript ? '.tsx' : '.jsx';
+        const outputFilename = `${componentName}${fileExtension}`;
+
+        const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
+        const rootPath = workspaceFolder
+          ? workspaceFolder.uri.fsPath
+          : path.dirname(svgPath);
+
+        const newFilePath = path.resolve(rootPath, outputDir, outputFilename);
+
+        await fs.mkdir(path.dirname(newFilePath), { recursive: true });
         await fs.writeFile(newFilePath, jsx);
 
         vscode.window.showInformationMessage(
