@@ -23,7 +23,7 @@
     "menus": {
       "explorer/context": [
         {
-          "when": "resourceLangId == svg",
+          "when": "resourceExtname == .svg",
           "command": "svgreact.convertFile",
           "group": "navigation"
         }
@@ -45,20 +45,23 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/svgo": "^2.6.4",
-    "@types/vscode": "^1.101.0",
+    "@babel/preset-typescript": "^7.27.1",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/svgo": "^2.6.4",
+    "@types/vscode": "^1.101.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
-    "eslint": "^9.23.0",
-    "esbuild": "^0.25.1",
-    "npm-run-all": "^4.1.5",
-    "typescript": "^5.8.2",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.23.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.2"
   },
   "dependencies": {
-    "@svgr/core": "^6.5.1"
+    "@svgr/core": "^6.5.1",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0"
   }
 }
