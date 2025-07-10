@@ -5,6 +5,8 @@
   "version": "1.0.0",
   "publisher": "pariola-droid",
   "icon": "images/icon.png",
+  "repository": "https://github.com/Pariola-droid/svg-react",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.101.0"
   },
