@@ -2,6 +2,12 @@ import { transform } from '@svgr/core';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+//
+import generate from '@babel/generator';
+import { parse } from '@babel/parser';
+import traverse from '@babel/traverse';
+import * as t from '@babel/types';
+import { formatComponentName } from './helper/formatComponentName';
 
 async function convertSvgToComponent(uri: vscode.Uri) {
   const svgPath = uri.fsPath;
@@ -9,6 +15,7 @@ async function convertSvgToComponent(uri: vscode.Uri) {
   const outputDir = config.get<string>('outputDir', '.');
   const useTypescript = config.get<boolean>('typescript', false);
   const useNative = config.get<boolean>('native', false);
+  const namePrefix = config.get<string>('componentNamePrefix', '');
 
   const svgrOptions = {
     native: useNative,
@@ -21,10 +28,9 @@ async function convertSvgToComponent(uri: vscode.Uri) {
   };
 
   const svgContent = await fs.readFile(svgPath, 'utf-8');
-  const componentName = path
-    .basename(svgPath, '.svg')
-    .replace(/[^a-zA-Z0-9]/g, '')
-    .replace(/^\w/, (c) => c.toUpperCase());
+
+  const baseName = path.basename(svgPath, '.svg');
+  const componentName = formatComponentName(baseName, namePrefix);
 
   const componentCode = await transform(svgContent, svgrOptions, {
     componentName,
@@ -72,6 +78,41 @@ function getWebviewContent(svgContent: string): string {
       )}" />
   </body>
   </html>`;
+}
+
+async function refactorFile(uri: vscode.Uri): Promise<number> {
+  const fileContent = await fs.readFile(uri.fsPath, 'utf-8');
+  const ast = parse(fileContent, {
+    sourceType: 'module',
+    plugins: ['jsx', 'typescript'],
+  });
+  let attributesChanged = 0;
+
+  const visitor = {
+    JSXAttribute(path: any) {
+      if (t.isJSXIdentifier(path.node.name)) {
+        const attributeName = path.node.name.name;
+        if (attributeName.includes('-')) {
+          const newName: string = attributeName.replace(
+            /-(\w)/g,
+            (_: string, letter: string) => letter.toUpperCase()
+          );
+          path.node.name.name = newName;
+          attributesChanged++;
+        }
+      }
+    },
+  };
+
+  traverse(ast, visitor);
+
+  if (attributesChanged > 0) {
+    const { code } = generate(ast, { retainLines: true });
+    await fs.writeFile(uri.fsPath, code);
+    return 1;
+  }
+
+  return 0;
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -156,7 +197,125 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(convertCommand, previewCommand);
+  const refactorCommand = vscode.commands.registerCommand(
+    'svgreact.refactor',
+    async (uri: vscode.Uri, uris: vscode.Uri[]) => {
+      let filesToRefactor = uris || (uri ? [uri] : []);
+      if (filesToRefactor.length === 0) {
+        const selectedFiles = await vscode.window.showOpenDialog({
+          canSelectMany: true,
+          openLabel: 'Select Component(s) to Refactor',
+          filters: { 'React Components': ['jsx', 'tsx'] },
+        });
+        if (selectedFiles) {
+          filesToRefactor = selectedFiles;
+        }
+      }
+      if (filesToRefactor.length === 0) {
+        vscode.window.showInformationMessage(
+          'No component files selected to refactor.'
+        );
+        return;
+      }
+
+      const results = await Promise.allSettled(
+        filesToRefactor.map((fileUri) => refactorFile(fileUri))
+      );
+      let totalFilesChanged = 0;
+      results.forEach((r) => {
+        if (r.status === 'fulfilled') {
+          totalFilesChanged += r.value; // is 1 if changed, else 0
+        }
+      });
+
+      if (totalFilesChanged > 0) {
+        vscode.window.showInformationMessage(
+          `Refactoring complete. Fixed attributes in ${totalFilesChanged} of ${filesToRefactor.length} file(s).`
+        );
+      } else {
+        vscode.window.showInformationMessage(
+          `No attributes needed fixing in the selected ${filesToRefactor.length} file(s).`
+        );
+      }
+    }
+  );
+
+  const refactorSelectionCommand = vscode.commands.registerCommand(
+    'svgreact.refactorSelection',
+    async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        vscode.window.showInformationMessage('No active editor found.');
+        return;
+      }
+
+      const selection = editor.selection;
+      if (selection.isEmpty) {
+        vscode.window.showInformationMessage('No text selected to refactor.');
+        return;
+      }
+
+      const selectedText = editor.document.getText(selection);
+
+      try {
+        const ast = parse(`<>${selectedText}</>`, {
+          sourceType: 'module',
+          plugins: ['jsx', 'typescript'],
+        });
+
+        let attributesChanged = 0;
+        const visitor = {
+          JSXAttribute(path: any) {
+            if (t.isJSXIdentifier(path.node.name)) {
+              const attributeName = path.node.name.name;
+              if (attributeName.includes('-')) {
+                const newName = attributeName.replace(
+                  /-(\w)/g,
+                  (_: string, letter: string) => letter.toUpperCase()
+                );
+                path.node.name.name = newName;
+                attributesChanged++;
+              }
+            }
+          },
+        };
+        traverse(ast, visitor);
+
+        if (attributesChanged > 0) {
+          // We need to generate the code from the children of the fragment we created
+          const fragmentBody = (ast.program.body[0] as any).expression.children;
+          // Generate code for each top-level element in the selection
+          const newCode = fragmentBody
+            .map((node: any) => generate(node).code)
+            .join('\n');
+
+          editor.edit((editBuilder) => {
+            editBuilder.replace(selection, newCode);
+          });
+          vscode.window.showInformationMessage(
+            `Successfully refactored ${attributesChanged} attribute(s).`
+          );
+        } else {
+          vscode.window.showInformationMessage(
+            'No attributes needed fixing in the selection.'
+          );
+        }
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        vscode.window.showErrorMessage(
+          `Failed to refactor selection: ${errorMessage}`
+        );
+        console.error(e);
+      }
+    }
+  );
+
+  context.subscriptions.push(
+    convertCommand,
+    previewCommand,
+    refactorCommand,
+    refactorSelectionCommand
+  );
 }
 
 export function deactivate() {}
