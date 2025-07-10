@@ -5,7 +5,6 @@ import * as vscode from 'vscode';
 
 async function convertSvgToComponent(uri: vscode.Uri) {
   const svgPath = uri.fsPath;
-
   const config = vscode.workspace.getConfiguration('svgreact');
   const outputDir = config.get<string>('outputDir', '.');
   const useTypescript = config.get<boolean>('typescript', false);
@@ -33,52 +32,74 @@ async function convertSvgToComponent(uri: vscode.Uri) {
 
   const fileExtension = useTypescript ? '.tsx' : '.jsx';
   const outputFilename = `${componentName}${fileExtension}`;
-
   const workspaceFolder = vscode.workspace.getWorkspaceFolder(uri);
   const rootPath = workspaceFolder
     ? workspaceFolder.uri.fsPath
     : path.dirname(svgPath);
 
   const newFilePath = path.resolve(rootPath, outputDir, outputFilename);
-
   await fs.mkdir(path.dirname(newFilePath), { recursive: true });
   await fs.writeFile(newFilePath, componentCode);
-  return componentName;
+
+  return outputFilename;
+}
+
+function getWebviewContent(svgContent: string): string {
+  return `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>SVG Preview</title>
+      <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          background-color: #222;
+        }
+        img {
+          max-width: 90%;
+          max-height: 90%;
+        }
+      </style>
+  </head>
+  <body>
+      <img src="data:image/svg+xml;base64,${Buffer.from(svgContent).toString(
+        'base64'
+      )}" />
+  </body>
+  </html>`;
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  const disposable = vscode.commands.registerCommand(
+  const convertCommand = vscode.commands.registerCommand(
     'svgreact.convertFile',
     async (uri: vscode.Uri, uris: vscode.Uri[]) => {
       let filesToConvert = uris || (uri ? [uri] : []);
-
       if (filesToConvert.length === 0) {
         const selectedFiles = await vscode.window.showOpenDialog({
           canSelectMany: true,
           openLabel: 'Select SVG(s) to Convert',
           filters: { 'SVG files': ['svg'] },
         });
-
         if (selectedFiles) {
           filesToConvert = selectedFiles;
         }
       }
-
       if (filesToConvert.length === 0) {
-        console.log('Execution cancelled: No files were selected.');
         vscode.window.showInformationMessage(
           'No SVG files selected for conversion.'
         );
         return;
       }
-
       const results = await Promise.allSettled(
         filesToConvert.map((fileUri) => convertSvgToComponent(fileUri))
       );
-
       const succeeded = results.filter((r) => r.status === 'fulfilled').length;
       const failed = results.filter((r) => r.status === 'rejected');
-
       if (failed.length > 0) {
         console.error(
           `${failed.length} conversions failed:`,
@@ -88,16 +109,13 @@ export function activate(context: vscode.ExtensionContext) {
           `Failed to convert ${failed.length} of ${results.length} files. See console for details.`
         );
       }
-
       if (succeeded === 1) {
         const res = results.find((r) => r.status === 'fulfilled') as
           | PromiseFulfilledResult<string>
           | undefined;
-
         if (res) {
-          const componentName = res.value;
           vscode.window.showInformationMessage(
-            `Successfully converted SVG to component: ${componentName}`
+            `Successfully converted SVG to component: ${res.value}`
           );
         }
       } else if (succeeded > 1) {
@@ -108,7 +126,37 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  context.subscriptions.push(disposable);
+  const previewCommand = vscode.commands.registerCommand(
+    'svgreact.preview',
+    async (uri: vscode.Uri) => {
+      if (!uri && vscode.window.activeTextEditor) {
+        uri = vscode.window.activeTextEditor.document.uri;
+      }
+      if (!uri) {
+        vscode.window.showErrorMessage(
+          'No SVG file selected or active to preview.'
+        );
+        return;
+      }
+
+      const panel = vscode.window.createWebviewPanel(
+        'svgPreview',
+        `Preview: ${path.basename(uri.fsPath)}`,
+        vscode.ViewColumn.One,
+        {}
+      );
+
+      try {
+        const svgContent = await fs.readFile(uri.fsPath, 'utf-8');
+        panel.webview.html = getWebviewContent(svgContent);
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        panel.webview.html = `<h1>Error reading SVG file: ${errorMessage}</h1>`;
+      }
+    }
+  );
+
+  context.subscriptions.push(convertCommand, previewCommand);
 }
 
 export function deactivate() {}
