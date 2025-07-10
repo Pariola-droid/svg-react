@@ -42,6 +42,11 @@
           "default": false,
           "description": "Output a TypeScript component (.tsx) with typed props."
         },
+        "svgreact.native": {
+          "type": "boolean",
+          "default": false,
+          "description": "Output a React Native compatible component."
+        },
         "svgreact.memo": {
           "type": "boolean",
           "default": false,
@@ -56,6 +61,15 @@
           "type": "boolean",
           "default": true,
           "description": "Set a default '1em' height and width for icon scaling."
+        },
+        "svgreact.exportType": {
+          "type": "string",
+          "enum": [
+            "default",
+            "named"
+          ],
+          "default": "default",
+          "description": "The type of export to use (default or named)."
         }
       }
     }
