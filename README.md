@@ -10,24 +10,28 @@ This isn't just another converter. It's a complete, native toolkit for VS Code d
 
 Grab one SVG (or a hundred!) from the file explorer, right-click, and convert them all into clean, optimized React components. No more one-by-one conversions.
 
+![Instant SVG conversion!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-conversion.gif)
 _(Animation showing multi-select in the file explorer, right-clicking, and converting)_
 
 ### ✨ Fix Messy SVGs with One Click
 
 Inherited a project with messy inline SVGs? We've all been there. Just highlight a block of code or right-click a file, and the sanitize command will instantly fix invalid attributes (like `stroke-width`) into valid JSX props (`strokeWidth`).
 
+![Fix messy codes!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-sanitize-select.gif)
 _(Animation showing a user selecting a block of messy SVG code, right-clicking, and choosing "SVGR: Sanitize Selected SVG")_
 
 ## ⚙️ Make It Your Own
 
 Your project, your rules. Tweak everything in your `settings.json`—output directories, TypeScript support, React Native mode, component prefixes, and more. Make the output match your codebase perfectly.
 
-_(Animation showing a user editing the `svgreact._`settings in`settings.json`)\*
+![Custom settings](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-settings.gif)
+_(Animation showing a user editing the `svgreact._`settings in`settings.json`)_
 
 ### 🔍 Preview Before You Commit
 
-Not sure which `arrow-left-icon.svg` is the right one? Right-click and hit "Preview" to see the SVG in a new tab before you do anything else.
+Not sure which `next.svg` is the right one? Right-click and hit "Preview" to see the SVG in a new tab before you do anything else.
 
+![SVG preview!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-preview.gif)
 _(Animation showing a user right-clicking an SVG and selecting "SVGR: Preview SVG")_
 
 ## How to Use It
