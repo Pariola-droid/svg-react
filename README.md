@@ -1,71 +1,97 @@
-# svgreact README
+# SVGReact: Your All-in-One SVG Toolkit for React
 
-This is the README for your extension "svgreact". After writing up a brief description, we recommend including the following sections.
+Tired of juggling SVGs? Manually converting `kebab-case` to `camelCase`, pasting huge blocks of code inline, or jumping over to a website just to convert one file? Me too. That's why I built **SVGReact**.
 
-## Features
+This isn't just another converter. It's a complete, native toolkit for VS Code designed to make working with SVGs in React feel seamless and intuitive, just like it should be.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## What It Does
 
-For example if there is an image subfolder under your extension project workspace:
+### 🚀 Convert SVGs to Components, Instantly
 
-\!\[feature X\]\(images/feature-x.png\)
+Grab one SVG (or a hundred!) from the file explorer, right-click, and convert them all into clean, optimized React components. No more one-by-one conversions.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+_(Animation showing multi-select in the file explorer, right-clicking, and converting)_
 
-## Requirements
+### ✨ Fix Messy SVGs with One Click
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Inherited a project with messy inline SVGs? We've all been there. Just highlight a block of code or right-click a file, and the sanitize command will instantly fix invalid attributes (like `stroke-width`) into valid JSX props (`strokeWidth`).
+
+_(Animation showing a user selecting a block of messy SVG code, right-clicking, and choosing "SVGR: Sanitize Selected SVG")_
+
+## ⚙️ Make It Your Own
+
+Your project, your rules. Tweak everything in your `settings.json`—output directories, TypeScript support, React Native mode, component prefixes, and more. Make the output match your codebase perfectly.
+
+_(Animation showing a user editing the `svgreact._`settings in`settings.json`)\*
+
+### 🔍 Preview Before You Commit
+
+Not sure which `arrow-left-icon.svg` is the right one? Right-click and hit "Preview" to see the SVG in a new tab before you do anything else.
+
+_(Animation showing a user right-clicking an SVG and selecting "SVGR: Preview SVG")_
+
+## How to Use It
+
+Here are the commands you'll be using. You can find them in the right-click context menu or by searching "SVGR" in the Command Palette (`Cmd+Shift+P`).
+
+| Command                                | What it does                                         | Where to find it               |
+| :------------------------------------- | :--------------------------------------------------- | :----------------------------- |
+| **SVGR: Convert to React Component**   | Turns `.svg` files into React components.            | File Explorer, Command Palette |
+| **SVGR: Preview SVG**                  | Opens a quick visual preview of an `.svg` file.      | File Explorer, Command Palette |
+| **SVGR: Sanitize Inline SVGs in File** | Fixes all SVG attributes in a `.jsx` or `.tsx` file. | File Explorer, Command Palette |
+| **SVGR: Sanitize Selected SVG**        | Fixes SVG attributes within the selected text block. | Editor Context Menu            |
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Customize the extension's behavior by adding these settings to your user or workspace `settings.json` file.
 
-For example:
+| Setting                        | Type      | Default   | Description                                                                                                        |
+| :----------------------------- | :-------- | :-------- | :----------------------------------------------------------------------------------------------------------------- |
+| `svgreact.outputDir`           | `string`  | `.`       | The directory where new components are saved. `.` means the same folder as the source SVG.                         |
+| `svgreact.typescript`          | `boolean` | `false`   | If true, generates a `.tsx` file with TypeScript types.                                                            |
+| `svgreact.native`              | `boolean` | `false`   | If true, generates a React Native compatible component.                                                            |
+| `svgreact.memo`                | `boolean` | `false`   | If true, wraps the generated component in `React.memo()`.                                                          |
+| `svgreact.ref`                 | `boolean` | `false`   | If true, forwards a `ref` to the underlying SVG element.                                                           |
+| `svgreact.icon`                | `boolean` | `true`    | If true, applies `1em` height and width for easy icon scaling.                                                     |
+| `svgreact.exportType`          | `string`  | `default` | Set to `named` for a named export instead of a default export.                                                     |
+| `svgreact.componentNamePrefix` | `string`  | `""`      | A prefix to add to all generated component names (e.g., setting to `"Icon"` will turn `user.svg` into `IconUser`). |
 
-This extension contributes the following settings:
+### Example Configuration (`.vscode/settings.json`)
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+```json
+{
+  "svgreact.outputDir": "src/components/icons",
+  "svgreact.typescript": true,
+  "svgreact.componentNamePrefix": "Icon",
+  "svgreact.memo": true
+}
+```
 
-## Known Issues
+## Usage
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+### Converting an SVG
+
+1. In the File Explorer, right-click on a `.svg` file (or select multiple files).
+2. Select **"SVGR: Convert to React Component"**.
+3. A new component file will be created based on your settings.
+
+### Sanitize an SVG Component
+
+1. Open a `.jsx` or `.tsx` file containing an inline SVG with invalid attributes (e.g., `stroke-width`).
+2. **To sanitize the whole file:** Right-click on the file in the Explorer and select **"SVGR: Fix Inline SVGs in File"**.
+3. **To sanitize a specific part:** Highlight the SVG code block in the editor, right-click, and select **"SVGR: Fix Selected SVG"**.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 1.0.0 - Initial Release
 
-### 1.0.0
+- Initial release of SVGReact.
+- Added core conversion, preview, and sanitize features.
+- Full configuration support via `settings.json`.
+- Support for multi-file conversion and selection-based refactoring.
 
-Initial release of ...
+## Contributing
 
-### 1.0.1
+If you have ideas for improvements or find bugs, please open an issue or submit a pull request on the [GitHub repository](https://github.com/Pariola-droid/svg-react).
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Enjoy the extension! Hope it saves you as much time as it saves me.**
