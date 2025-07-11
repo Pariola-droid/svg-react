@@ -1,4 +1,4 @@
-# SVGReact: Your All-in-One SVG Toolkit for React
+# SVGReact: Seamless SVG Workflows Inside VS Code
 
 Tired of juggling SVGs? Manually converting `kebab-case` to `camelCase`, pasting huge blocks of code inline, or jumping over to a website just to convert one file? Me too. That's why I built **SVGReact**.
 
