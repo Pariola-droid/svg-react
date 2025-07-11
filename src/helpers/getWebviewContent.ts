@@ -18,7 +18,7 @@ export function getWebviewContent(svgContent: string): string {
           width: 100%;
           height: 100%;
           overflow: hidden;
-          background-color: #fafafa;
+          background-color: #f5fafa; 
         }
         #container {
           width: 100%;
