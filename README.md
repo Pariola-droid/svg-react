@@ -11,28 +11,24 @@ This isn't just another converter. It's a complete, native toolkit for VS Code d
 Grab one SVG (or a hundred!) from the file explorer, right-click, and convert them all into clean, optimized React components. No more one-by-one conversions.
 
 ![Instant SVG conversion!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-conversion.gif)
-_(Animation showing multi-select in the file explorer, right-clicking, and converting)_
 
 ### ✨ Fix Messy SVGs with One Click
 
 Inherited a project with messy inline SVGs? We've all been there. Just highlight a block of code or right-click a file, and the sanitize command will instantly fix invalid attributes (like `stroke-width`) into valid JSX props (`strokeWidth`).
 
 ![Fix messy codes!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-sanitize-select.gif)
-_(Animation showing a user selecting a block of messy SVG code, right-clicking, and choosing "SVGR: Sanitize SVG Attributes in File")_
 
-## ⚙️ Make It Your Own
+### 🔍 Advanced Interactive Previews
+
+Instantly preview any `.svg` file or even the SVG code inside your existing React components. The interactive webview allows you to zoom and pan, making it perfect for inspecting complex icons.
+
+![SVG preview!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-preview.gif)
+
+### ⚙️ Make It Your Own
 
 Your project, your rules. Tweak everything in your `settings.json`—output directories, TypeScript support, React Native mode, component prefixes, and more. Make the output match your codebase perfectly.
 
 ![Custom settings](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-settings.gif)
-_(Animation showing a user editing the `svgreact._`settings in`settings.json`)\_
-
-### 🔍 Preview Before You Commit
-
-Not sure which `next.svg` is the right one? Right-click and hit "Preview" to see the SVG in a new tab before you do anything else.
-
-![SVG preview!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-preview.gif)
-_(Animation showing a user right-clicking an SVG and selecting "SVGR: Preview SVG")_
 
 ## How to Use It
 
@@ -41,7 +37,9 @@ Here are the commands you'll be using. You can find them in the right-click cont
 | Command                                    | What it does                                         | Where to find it               |
 | :----------------------------------------- | :--------------------------------------------------- | :----------------------------- |
 | **SVGR: Convert to React Component**       | Turns `.svg` files into React components.            | File Explorer, Command Palette |
-| **SVGR: Preview SVG**                      | Opens a quick visual preview of an `.svg` file.      | File Explorer, Command Palette |
+| **SVGR: Preview SVG File**                 | Opens a preview of an `.svg` file.                   | File Explorer, Command Palette |
+| **SVGR: Preview Component's SVG**          | Previews the SVG inside a `.jsx` or `.tsx` file.     | File Explorer, Command Palette |
+| **SVGR: Preview Selected SVG**             | Previews only the SVG code you've highlighted.       | Editor Context Menu            |
 | **SVGR: Sanitize SVG Attributes in File**  | Fixes all SVG attributes in a `.jsx` or `.tsx` file. | File Explorer, Command Palette |
 | **SVGR: Sanitize Attributes in Selection** | Fixes SVG attributes within the selected text block. | Editor Context Menu            |
 
@@ -79,7 +77,13 @@ Customize the extension's behavior by adding these settings to your user or work
 2. Select **"SVGR: Convert to React Component"**.
 3. A new component file will be created based on your settings.
 
-### Sanitize an SVG Component
+### Previewing an SVG
+
+1. **To preview an SVG file:** Right-click on the `.svg` file in the Explorer and select **"SVGR: Preview SVG File"**.
+2. **To preview an SVG inside a component:** Right-click on the `.jsx`/`.tsx` file and select **"SVGR: Preview Component's SVG"**.
+3. **To preview a specific part:** Highlight the `<svg>...</svg>` code block in the editor, right-click, and select **"SVGR: Preview Selected SVG"**.
+
+### Sanitizing an SVG Component
 
 1. Open a `.jsx` or `.tsx` file containing an inline SVG with invalid attributes (e.g., `stroke-width`).
 2. **To sanitize the whole file:** Right-click on the file in the Explorer and select **"SVGR: Sanitize SVG Attributes in File"**.
@@ -87,12 +91,17 @@ Customize the extension's behavior by adding these settings to your user or work
 
 ## Release Notes
 
-### 1.0.0 - Initial Release
+### 1.1.0
+
+- **New Feature:** Added advanced interactive previews for existing React components and selected SVG code.
+- **New Feature:** Preview webview now supports zoom and pan.
+
+### 1.0.0 - 1.0.4
 
 - Initial release of SVGReact.
 - Added core conversion, preview, and sanitize features.
 - Full configuration support via `settings.json`.
-- Support for multi-file conversion and selection-based refactoring.
+- Critical bug fixes for production builds and dependency management.
 
 ## Contributing
 
