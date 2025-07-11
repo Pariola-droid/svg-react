@@ -3,6 +3,10 @@ import { promises as fs } from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { formatComponentName } from './formatComponentName';
+//
+import jsx from '@svgr/plugin-jsx';
+import prettier from '@svgr/plugin-prettier';
+import svgo from '@svgr/plugin-svgo';
 
 /**
  * Converts a single SVG file to a React component based on user settings.
@@ -25,7 +29,7 @@ export async function convertSvgToComponent(uri: vscode.Uri) {
     ref: config.get<boolean>('ref', false),
     typescript: useTypescript,
     exportType: config.get<'default' | 'named'>('exportType', 'default'),
-    plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
+    plugins: [svgo, jsx, prettier],
   };
 
   const svgContent = await fs.readFile(svgPath, 'utf-8');

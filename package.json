@@ -2,7 +2,7 @@
   "name": "svgreact",
   "displayName": "SVGReact",
   "description": "This extension provides the functionality of react-svgr directly within the editor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "pariola-droid",
   "icon": "images/icon.png",
   "repository": "https://github.com/Pariola-droid/svg-react",
@@ -144,16 +144,16 @@
   "dependencies": {
     "@babel/generator": "^7.24.7",
     "@babel/parser": "^7.24.7",
-    "@babel/preset-typescript": "^7.24.7",
+    "@babel/preset-typescript": "^7.27.1",
     "@babel/traverse": "^7.24.7",
     "@svgr/core": "^6.5.1",
-    "@svgr/plugin-jsx": "^6.5.1",
-    "@svgr/plugin-prettier": "^6.5.1",
-    "@svgr/plugin-svgo": "^6.5.1"
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-prettier": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0"
   },
   "devDependencies": {
-    "@types/babel__generator": "^7.6.8",
-    "@types/babel__traverse": "^7.20.6",
+    "@types/babel__generator": "^7.27.0",
+    "@types/babel__traverse": "^7.20.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@types/svgo": "^2.6.4",
