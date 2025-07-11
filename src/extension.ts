@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import {
   convertFileHandler,
   previewHandler,
+  previewSelectionHandler,
   refactorFileHandler,
   refactorSelectionHandler,
 } from './commands';
@@ -27,11 +28,17 @@ export function activate(context: vscode.ExtensionContext) {
     refactorSelectionHandler
   );
 
+  const previewSelectionCommand = vscode.commands.registerCommand(
+    'svgreact.previewSelection',
+    previewSelectionHandler
+  );
+
   context.subscriptions.push(
     convertCommand,
     previewCommand,
     refactorCommand,
-    refactorSelectionCommand
+    refactorSelectionCommand,
+    previewSelectionCommand
   );
 }
 
