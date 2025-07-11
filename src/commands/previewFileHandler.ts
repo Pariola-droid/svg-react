@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { getWebviewContent } from '../helpers/getWebviewContent';
 
-export async function previewHandler(uri: vscode.Uri) {
+export async function previewFileHandler(uri: vscode.Uri) {
   if (!uri && vscode.window.activeTextEditor) {
     uri = vscode.window.activeTextEditor.document.uri;
   }

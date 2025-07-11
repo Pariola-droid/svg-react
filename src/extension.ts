@@ -1,44 +1,51 @@
 import * as vscode from 'vscode';
 import {
   convertFileHandler,
-  previewHandler,
-  previewSelectionHandler,
+  previewFileHandler,
+  previewSvgComponentHandler,
+  previewSvgSelectionHandler,
   refactorFileHandler,
-  refactorSelectionHandler,
+  refactorSvgSelectionHandler,
 } from './commands';
 
 export function activate(context: vscode.ExtensionContext) {
-  const convertCommand = vscode.commands.registerCommand(
+  const convertFileCommand = vscode.commands.registerCommand(
     'svgreact.convertFile',
     convertFileHandler
   );
 
-  const previewCommand = vscode.commands.registerCommand(
+  const previewFileCommand = vscode.commands.registerCommand(
     'svgreact.preview',
-    previewHandler
+    previewFileHandler
   );
 
-  const refactorCommand = vscode.commands.registerCommand(
+  const refactorFileCommand = vscode.commands.registerCommand(
     'svgreact.refactor',
     refactorFileHandler
   );
 
-  const refactorSelectionCommand = vscode.commands.registerCommand(
+  const refactorSvgSelectionCommand = vscode.commands.registerCommand(
     'svgreact.refactorSelection',
-    refactorSelectionHandler
+    refactorSvgSelectionHandler
   );
 
-  const previewSelectionCommand = vscode.commands.registerCommand(
+  const previewSvgComponentCommand = vscode.commands.registerCommand(
+    'svgreact.previewComponent',
+    previewSvgComponentHandler
+  );
+
+  const previewSvgSelectionCommand = vscode.commands.registerCommand(
     'svgreact.previewSelection',
-    previewSelectionHandler
+    previewSvgSelectionHandler
   );
 
   context.subscriptions.push(
-    convertCommand,
-    previewCommand,
-    refactorCommand,
-    refactorSelectionCommand,
-    previewSelectionCommand
+    convertFileCommand,
+    previewFileCommand,
+    refactorFileCommand,
+    refactorSvgSelectionCommand,
+    previewSvgComponentCommand,
+    previewSvgSelectionCommand
   );
 }
 
