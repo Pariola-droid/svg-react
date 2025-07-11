@@ -87,21 +87,6 @@ export function activate(context: vscode.ExtensionContext) {
     previewHandler
   );
 
-<<<<<<< HEAD
-  const refactorCommand = vscode.commands.registerCommand(
-    'svgreact.refactor',
-    refactorFileHandler
-  );
-
-  const refactorSelectionCommand = vscode.commands.registerCommand(
-    'svgreact.refactorSelection',
-    refactorSelectionHandler
-  );
-
-  const previewSelectionCommand = vscode.commands.registerCommand(
-    'svgreact.previewSelection',
-    previewSelectionHandler
-=======
   const previewComponentCommand = vscode.commands.registerCommand(
     'svgreact.previewComponent',
     async (uri: vscode.Uri) => {
@@ -186,19 +171,12 @@ export function activate(context: vscode.ExtensionContext) {
         console.error(e);
       }
     }
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
   );
 
   context.subscriptions.push(
     convertCommand,
     previewCommand,
-<<<<<<< HEAD
-    refactorCommand,
-    refactorSelectionCommand,
-    previewSelectionCommand
-=======
     previewComponentCommand
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
   );
 }
 
