@@ -6,7 +6,7 @@ import { promises as fs } from 'fs';
 import * as vscode from 'vscode';
 
 /**
- * Refactors a component file by converting kebab-case SVG attributes to camelCase.
+ * Sanitize a component file by converting kebab-case SVG attributes to camelCase.
  * @param uri The URI of the component file to refactor.
  * @returns 1 if the file was changed, 0 otherwise.
  */

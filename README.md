@@ -18,14 +18,14 @@ _(Animation showing multi-select in the file explorer, right-clicking, and conve
 Inherited a project with messy inline SVGs? We've all been there. Just highlight a block of code or right-click a file, and the sanitize command will instantly fix invalid attributes (like `stroke-width`) into valid JSX props (`strokeWidth`).
 
 ![Fix messy codes!](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-sanitize-select.gif)
-_(Animation showing a user selecting a block of messy SVG code, right-clicking, and choosing "SVGR: Sanitize Selected SVG")_
+_(Animation showing a user selecting a block of messy SVG code, right-clicking, and choosing "SVGR: Sanitize SVG Attributes in File")_
 
 ## ⚙️ Make It Your Own
 
 Your project, your rules. Tweak everything in your `settings.json`—output directories, TypeScript support, React Native mode, component prefixes, and more. Make the output match your codebase perfectly.
 
 ![Custom settings](https://pub-f746c03a0c4b41d0b834b41fd9188a31.r2.dev/svgr-settings.gif)
-_(Animation showing a user editing the `svgreact._`settings in`settings.json`)_
+_(Animation showing a user editing the `svgreact._`settings in`settings.json`)\_
 
 ### 🔍 Preview Before You Commit
 
@@ -38,12 +38,12 @@ _(Animation showing a user right-clicking an SVG and selecting "SVGR: Preview SV
 
 Here are the commands you'll be using. You can find them in the right-click context menu or by searching "SVGR" in the Command Palette (`Cmd+Shift+P`).
 
-| Command                                | What it does                                         | Where to find it               |
-| :------------------------------------- | :--------------------------------------------------- | :----------------------------- |
-| **SVGR: Convert to React Component**   | Turns `.svg` files into React components.            | File Explorer, Command Palette |
-| **SVGR: Preview SVG**                  | Opens a quick visual preview of an `.svg` file.      | File Explorer, Command Palette |
-| **SVGR: Sanitize Inline SVGs in File** | Fixes all SVG attributes in a `.jsx` or `.tsx` file. | File Explorer, Command Palette |
-| **SVGR: Sanitize Selected SVG**        | Fixes SVG attributes within the selected text block. | Editor Context Menu            |
+| Command                                    | What it does                                         | Where to find it               |
+| :----------------------------------------- | :--------------------------------------------------- | :----------------------------- |
+| **SVGR: Convert to React Component**       | Turns `.svg` files into React components.            | File Explorer, Command Palette |
+| **SVGR: Preview SVG**                      | Opens a quick visual preview of an `.svg` file.      | File Explorer, Command Palette |
+| **SVGR: Sanitize SVG Attributes in File**  | Fixes all SVG attributes in a `.jsx` or `.tsx` file. | File Explorer, Command Palette |
+| **SVGR: Sanitize Attributes in Selection** | Fixes SVG attributes within the selected text block. | Editor Context Menu            |
 
 ## Extension Settings
 
@@ -82,8 +82,8 @@ Customize the extension's behavior by adding these settings to your user or work
 ### Sanitize an SVG Component
 
 1. Open a `.jsx` or `.tsx` file containing an inline SVG with invalid attributes (e.g., `stroke-width`).
-2. **To sanitize the whole file:** Right-click on the file in the Explorer and select **"SVGR: Fix Inline SVGs in File"**.
-3. **To sanitize a specific part:** Highlight the SVG code block in the editor, right-click, and select **"SVGR: Fix Selected SVG"**.
+2. **To sanitize the whole file:** Right-click on the file in the Explorer and select **"SVGR: Sanitize SVG Attributes in File"**.
+3. **To sanitize a specific part:** Highlight the SVG code block in the editor, right-click, and select **"SVGR: Sanitize Attributes in Selection"**.
 
 ## Release Notes
 

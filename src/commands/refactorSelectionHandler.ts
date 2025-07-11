@@ -13,7 +13,7 @@ export async function refactorSelectionHandler() {
 
   const selection = editor.selection;
   if (selection.isEmpty) {
-    vscode.window.showInformationMessage('No text selected to refactor.');
+    vscode.window.showInformationMessage('No text selected to sanitize.');
     return;
   }
 
@@ -53,7 +53,7 @@ export async function refactorSelectionHandler() {
         editBuilder.replace(selection, newCode);
       });
       vscode.window.showInformationMessage(
-        `Successfully refactored ${attributesChanged} attribute(s).`
+        `Successfully sanitized ${attributesChanged} attribute(s).`
       );
     } else {
       vscode.window.showInformationMessage(
@@ -63,7 +63,7 @@ export async function refactorSelectionHandler() {
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : String(e);
     vscode.window.showErrorMessage(
-      `Failed to refactor selection: ${errorMessage}`
+      `Failed to sanitize selection: ${errorMessage}`
     );
     console.error(e);
   }

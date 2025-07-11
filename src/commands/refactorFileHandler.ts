@@ -15,7 +15,7 @@ export async function refactorFileHandler(uri: vscode.Uri, uris: vscode.Uri[]) {
   }
   if (filesToRefactor.length === 0) {
     vscode.window.showInformationMessage(
-      'No component files selected to refactor.'
+      'No component files selected to sanitize.'
     );
     return;
   }
@@ -32,7 +32,7 @@ export async function refactorFileHandler(uri: vscode.Uri, uris: vscode.Uri[]) {
 
   if (totalFilesChanged > 0) {
     vscode.window.showInformationMessage(
-      `Refactoring complete. Fixed attributes in ${totalFilesChanged} of ${filesToRefactor.length} file(s).`
+      `Sanitized attributes in ${totalFilesChanged} of ${filesToRefactor.length} file(s).`
     );
   } else {
     vscode.window.showInformationMessage(
