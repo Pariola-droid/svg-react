@@ -29,7 +29,8 @@
     "onCommand:svgreact.convertFile",
     "onCommand:svgreact.preview",
     "onCommand:svgreact.refactor",
-    "onCommand:svgreact.refactorSelection"
+    "onCommand:svgreact.refactorSelection",
+    "onCommand:svgreact.previewSelectionCommand"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -49,6 +50,10 @@
       {
         "command": "svgreact.refactorSelection",
         "title": "SVGR: Sanitize Attributes in Selection"
+      },
+      {
+        "command": "svgreact.previewSelection",
+        "title": "SVGR: Preview Selected SVG"
       }
     ],
     "menus": {
@@ -74,6 +79,11 @@
           "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
           "command": "svgreact.refactorSelection",
           "group": "2_refactor"
+        },
+        {
+          "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
+          "command": "svgreact.previewSelection",
+          "group": "3_preview"
         }
       ]
     },

@@ -18,7 +18,7 @@ export function getWebviewContent(svgContent: string): string {
           align-items: center;
           height: 100vh;
           margin: 0;
-          background-color: #222;
+          background-color: #fafafa;
         }
         img {
           max-width: 90%;
