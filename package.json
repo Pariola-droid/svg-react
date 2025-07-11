@@ -2,7 +2,7 @@
   "name": "svgreact",
   "displayName": "SVGReact",
   "description": "This extension provides the functionality of react-svgr directly within the editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "pariola-droid",
   "icon": "images/icon.png",
   "repository": "https://github.com/Pariola-droid/svg-react",
@@ -20,6 +20,8 @@
     "svgr",
     "component",
     "convert",
+    "refactor",
+    "sanitize",
     "jsx",
     "tsx"
   ],
@@ -139,30 +141,29 @@
     "lint": "eslint src",
     "test": "vscode-test"
   },
+  "dependencies": {
+    "@babel/generator": "^7.24.7",
+    "@babel/parser": "^7.24.7",
+    "@babel/traverse": "^7.24.7",
+    "@svgr/core": "^6.5.1",
+    "@svgr/plugin-jsx": "^6.5.1",
+    "@svgr/plugin-prettier": "^6.5.1",
+    "@svgr/plugin-svgo": "^6.5.1"
+  },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.27.1",
-    "@types/babel__generator": "^7.27.0",
-    "@types/babel__traverse": "^7.20.7",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "20.x",
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__traverse": "^7.20.6",
     "@types/svgo": "^2.6.4",
     "@types/vscode": "^1.101.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1",
-    "esbuild": "^0.25.1",
     "eslint": "^9.23.0",
+    "esbuild": "^0.25.1",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.8.2"
-  },
-  "dependencies": {
-    "@babel/generator": "^7.28.0",
-    "@babel/parser": "^7.28.0",
-    "@babel/traverse": "^7.28.0",
-    "@svgr/core": "^6.5.1",
-    "@svgr/plugin-jsx": "^8.1.0",
-    "@svgr/plugin-prettier": "^8.1.0",
-    "@svgr/plugin-svgo": "^8.1.0"
+    "typescript": "^5.8.2",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
   }
 }
