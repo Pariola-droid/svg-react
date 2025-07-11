@@ -25,7 +25,7 @@ export function extractAndCleanSvg(sourceText: string): string | null {
     regex.findJsxExpressions,
     (match, attrName, value) => {
       if (value.includes('currentColor')) {
-        return `${attrName}="white"`;
+        return `${attrName}="green"`;
       }
 
       const literalMatch =
