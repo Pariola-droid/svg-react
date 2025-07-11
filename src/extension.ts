@@ -173,6 +173,92 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const previewComponentCommand = vscode.commands.registerCommand(
+    'svgreact.previewComponent',
+    async (uri: vscode.Uri) => {
+      if (!uri) {
+        vscode.window.showErrorMessage('No component file selected.');
+        return;
+      }
+
+      try {
+        const fileContent = await fs.readFile(uri.fsPath, 'utf-8');
+
+        const ast = parse(fileContent, {
+          sourceType: 'module',
+          plugins: ['jsx', 'typescript'],
+        });
+
+        let svgNode: t.JSXElement | null = null;
+
+        traverse(ast, {
+          JSXElement(path) {
+            if (
+              t.isJSXIdentifier(path.node.openingElement.name, { name: 'svg' })
+            ) {
+              svgNode = path.node;
+              path.stop();
+            }
+          },
+        });
+
+        if (svgNode) {
+          const svgCompliantAst = t.cloneNode(svgNode, true, true);
+
+          traverse(svgCompliantAst, {
+            noScope: true,
+            JSXAttribute(path) {
+              // strokeWidth -> stroke-width
+              if (t.isJSXIdentifier(path.node.name)) {
+                const name = path.node.name.name;
+                const newName = name.replace(
+                  /[A-Z]/g,
+                  (letter) => `-${letter.toLowerCase()}`
+                );
+                if (name !== newName) {
+                  path.node.name.name = newName;
+                }
+              }
+
+              // width={24} - width="24"
+              if (t.isJSXExpressionContainer(path.node.value)) {
+                const expression = path.node.value.expression;
+                if (
+                  t.isNumericLiteral(expression) ||
+                  t.isStringLiteral(expression)
+                ) {
+                  path.node.value = t.stringLiteral(String(expression.value));
+                } else {
+                  path.remove();
+                }
+              }
+            },
+          });
+
+          const { code } = generate(svgCompliantAst);
+
+          const panel = vscode.window.createWebviewPanel(
+            'svgComponentPreview',
+            `Preview: ${path.basename(uri.fsPath)}`,
+            vscode.ViewColumn.One,
+            {}
+          );
+          panel.webview.html = getWebviewContent(code);
+        } else {
+          vscode.window.showInformationMessage(
+            'No SVG element found in this component.'
+          );
+        }
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        vscode.window.showErrorMessage(
+          `Failed to parse component: ${errorMessage}`
+        );
+        console.error(e);
+      }
+    }
+  );
+
   context.subscriptions.push(
     convertCommand,
     previewCommand,
