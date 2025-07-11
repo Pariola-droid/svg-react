@@ -15,27 +15,27 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const previewFileCommand = vscode.commands.registerCommand(
-    'svgreact.preview',
+    'svgreact.previewFile',
     previewFileHandler
   );
 
   const refactorFileCommand = vscode.commands.registerCommand(
-    'svgreact.refactor',
+    'svgreact.refactorFile',
     refactorFileHandler
   );
 
   const refactorSvgSelectionCommand = vscode.commands.registerCommand(
-    'svgreact.refactorSelection',
+    'svgreact.refactorSvgSelection',
     refactorSvgSelectionHandler
   );
 
   const previewSvgComponentCommand = vscode.commands.registerCommand(
-    'svgreact.previewComponent',
+    'svgreact.previewSvgComponent',
     previewSvgComponentHandler
   );
 
   const previewSvgSelectionCommand = vscode.commands.registerCommand(
-    'svgreact.previewSelection',
+    'svgreact.previewSvgSelection',
     previewSvgSelectionHandler
   );
 

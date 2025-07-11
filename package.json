@@ -27,11 +27,11 @@
   ],
   "activationEvents": [
     "onCommand:svgreact.convertFile",
-    "onCommand:svgreact.preview",
-    "onCommand:svgreact.refactor",
-    "onCommand:svgreact.refactorSelection",
-    "onCommand:svgreact.previewComponent",
-    "onCommand:svgreact.previewSelection"
+    "onCommand:svgreact.previewFile",
+    "onCommand:svgreact.refactorFile",
+    "onCommand:svgreact.refactorSvgSelection",
+    "onCommand:svgreact.previewSvgComponent",
+    "onCommand:svgreact.previewSvgSelection"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -41,23 +41,23 @@
         "title": "SVGR: Convert to React Component"
       },
       {
-        "command": "svgreact.preview",
+        "command": "svgreact.previewFile",
         "title": "SVGR: Preview SVG File"
       },
       {
-        "command": "svgreact.refactor",
+        "command": "svgreact.refactorFile",
         "title": "SVGR: Sanitize SVG Attributes in File"
       },
       {
-        "command": "svgreact.refactorSelection",
+        "command": "svgreact.refactorSvgSelection",
         "title": "SVGR: Sanitize Attributes in Selection"
       },
       {
-        "command": "svgreact.previewComponent",
+        "command": "svgreact.previewSvgComponent",
         "title": "SVGR: Preview SVG Component"
       },
       {
-        "command": "svgreact.previewSelection",
+        "command": "svgreact.previewSvgSelection",
         "title": "SVGR: Preview Selected SVG"
       }
     ],
@@ -70,29 +70,29 @@
         },
         {
           "when": "resourceExtname == .svg",
-          "command": "svgreact.preview",
+          "command": "svgreact.previewFile",
           "group": "1_conversion"
         },
         {
           "when": "resourceExtname == .jsx || resourceExtname == .tsx",
-          "command": "svgreact.refactor",
+          "command": "svgreact.refactorFile",
           "group": "2_refactor"
         },
         {
           "when": "resourceExtname == .jsx || resourceExtname == .tsx",
-          "command": "svgreact.previewComponent",
+          "command": "svgreact.previewSvgComponent",
           "group": "3_preview"
         }
       ],
       "editor/context": [
         {
           "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
-          "command": "svgreact.refactorSelection",
+          "command": "svgreact.refactorSvgSelection",
           "group": "2_refactor"
         },
         {
           "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
-          "command": "svgreact.previewSelection",
+          "command": "svgreact.previewSvgSelection",
           "group": "3_preview"
         }
       ]
