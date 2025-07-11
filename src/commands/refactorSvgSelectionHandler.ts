@@ -4,7 +4,7 @@ import traverse from '@babel/traverse';
 import * as t from '@babel/types';
 import * as vscode from 'vscode';
 
-export async function refactorSelectionHandler() {
+export async function refactorSvgSelectionHandler() {
   const editor = vscode.window.activeTextEditor;
   if (!editor) {
     vscode.window.showInformationMessage('No active editor found.');
