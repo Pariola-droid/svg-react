@@ -28,13 +28,7 @@
   "activationEvents": [
     "onCommand:svgreact.convertFile",
     "onCommand:svgreact.preview",
-<<<<<<< HEAD
-    "onCommand:svgreact.refactor",
-    "onCommand:svgreact.refactorSelection",
-    "onCommand:svgreact.previewSelectionCommand"
-=======
     "onCommand:svgreact.previewComponent"
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -48,21 +42,8 @@
         "title": "SVGR: Preview"
       },
       {
-<<<<<<< HEAD
-        "command": "svgreact.refactor",
-        "title": "SVGR: Sanitize SVG Attributes in File"
-      },
-      {
-        "command": "svgreact.refactorSelection",
-        "title": "SVGR: Sanitize Attributes in Selection"
-      },
-      {
-        "command": "svgreact.previewSelection",
-        "title": "SVGR: Preview Selected SVG"
-=======
         "command": "svgreact.previewComponent",
         "title": "SVGR: Preview Component"
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
       }
     ],
     "menus": {
@@ -78,27 +59,9 @@
           "group": "1_conversion"
         },
         {
-<<<<<<< HEAD
-          "when": "resourceExtname == .jsx || resourceExtname == .tsx",
-          "command": "svgreact.refactor",
-          "group": "2_refactor"
-        }
-      ],
-      "editor/context": [
-        {
-          "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
-          "command": "svgreact.refactorSelection",
-          "group": "2_refactor"
-        },
-        {
-          "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
-          "command": "svgreact.previewSelection",
-          "group": "3_preview"
-=======
           "when": "resourceLangId == javascriptreact || resourceLangId == typescriptreact",
           "command": "svgreact.previewComponent",
           "group": "2_preview"
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
         }
       ]
     },
@@ -170,16 +133,6 @@
     "@babel/generator": "^7.24.7",
     "@babel/parser": "^7.24.7",
     "@babel/preset-typescript": "^7.27.1",
-<<<<<<< HEAD
-    "@babel/traverse": "^7.24.7",
-    "@svgr/core": "^6.5.1",
-    "@svgr/plugin-jsx": "^8.1.0",
-    "@svgr/plugin-prettier": "^8.1.0",
-    "@svgr/plugin-svgo": "^8.1.0"
-  },
-  "devDependencies": {
-=======
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
     "@types/babel__generator": "^7.27.0",
     "@types/babel__traverse": "^7.20.7",
     "@types/mocha": "^10.0.10",
@@ -194,8 +147,6 @@
     "eslint": "^9.23.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.8.2"
-<<<<<<< HEAD
-=======
   },
   "dependencies": {
     "@babel/generator": "^7.28.0",
@@ -205,6 +156,5 @@
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-prettier": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0"
->>>>>>> b8c6e3f (feat: add preview component command and update activation events)
   }
 }
