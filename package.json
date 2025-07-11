@@ -28,7 +28,9 @@
   "activationEvents": [
     "onCommand:svgreact.convertFile",
     "onCommand:svgreact.preview",
-    "onCommand:svgreact.previewComponent"
+    "onCommand:svgreact.refactor",
+    "onCommand:svgreact.refactorSelection",
+    "onCommand:svgreact.previewSelectionCommand"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -42,8 +44,16 @@
         "title": "SVGR: Preview"
       },
       {
-        "command": "svgreact.previewComponent",
-        "title": "SVGR: Preview Component"
+        "command": "svgreact.refactor",
+        "title": "SVGR: Sanitize SVG Attributes in File"
+      },
+      {
+        "command": "svgreact.refactorSelection",
+        "title": "SVGR: Sanitize Attributes in Selection"
+      },
+      {
+        "command": "svgreact.previewSelection",
+        "title": "SVGR: Preview Selected SVG"
       }
     ],
     "menus": {
@@ -59,9 +69,21 @@
           "group": "1_conversion"
         },
         {
-          "when": "resourceLangId == javascriptreact || resourceLangId == typescriptreact",
-          "command": "svgreact.previewComponent",
-          "group": "2_preview"
+          "when": "resourceExtname == .jsx || resourceExtname == .tsx",
+          "command": "svgreact.refactor",
+          "group": "2_refactor"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
+          "command": "svgreact.refactorSelection",
+          "group": "2_refactor"
+        },
+        {
+          "when": "editorHasSelection && (resourceExtname == .jsx || resourceExtname == .tsx)",
+          "command": "svgreact.previewSelection",
+          "group": "3_preview"
         }
       ]
     },
@@ -133,6 +155,13 @@
     "@babel/generator": "^7.24.7",
     "@babel/parser": "^7.24.7",
     "@babel/preset-typescript": "^7.27.1",
+    "@babel/traverse": "^7.24.7",
+    "@svgr/core": "^6.5.1",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-prettier": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0"
+  },
+  "devDependencies": {
     "@types/babel__generator": "^7.27.0",
     "@types/babel__traverse": "^7.20.7",
     "@types/mocha": "^10.0.10",
@@ -147,14 +176,5 @@
     "eslint": "^9.23.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.8.2"
-  },
-  "dependencies": {
-    "@babel/generator": "^7.28.0",
-    "@babel/parser": "^7.28.0",
-    "@babel/traverse": "^7.28.0",
-    "@svgr/core": "^6.5.1",
-    "@svgr/plugin-jsx": "^8.1.0",
-    "@svgr/plugin-prettier": "^8.1.0",
-    "@svgr/plugin-svgo": "^8.1.0"
   }
 }
