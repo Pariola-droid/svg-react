@@ -47,16 +47,19 @@ Here are the commands you'll be using. You can find them in the right-click cont
 
 Customize the extension's behavior by adding these settings to your user or workspace `settings.json` file.
 
-| Setting                        | Type      | Default   | Description                                                                                                        |
-| :----------------------------- | :-------- | :-------- | :----------------------------------------------------------------------------------------------------------------- |
-| `svgreact.outputDir`           | `string`  | `.`       | The directory where new components are saved. `.` means the same folder as the source SVG.                         |
-| `svgreact.typescript`          | `boolean` | `false`   | If true, generates a `.tsx` file with TypeScript types.                                                            |
-| `svgreact.native`              | `boolean` | `false`   | If true, generates a React Native compatible component.                                                            |
-| `svgreact.memo`                | `boolean` | `false`   | If true, wraps the generated component in `React.memo()`.                                                          |
-| `svgreact.ref`                 | `boolean` | `false`   | If true, forwards a `ref` to the underlying SVG element.                                                           |
-| `svgreact.icon`                | `boolean` | `true`    | If true, applies `1em` height and width for easy icon scaling.                                                     |
-| `svgreact.exportType`          | `string`  | `default` | Set to `named` for a named export instead of a default export.                                                     |
-| `svgreact.componentNamePrefix` | `string`  | `""`      | A prefix to add to all generated component names (e.g., setting to `"Icon"` will turn `user.svg` into `IconUser`). |
+| Setting                        | Type      | Default            | Description                                                                                                        |
+| :----------------------------- | :-------- | :----------------- | :----------------------------------------------------------------------------------------------------------------- |
+| `svgreact.outputDir`           | `string`  | `.`                | The directory where new components are saved. `.` means the same folder as the source SVG.                         |
+| `svgreact.typescript`          | `boolean` | `false`            | If true, generates a `.tsx` file with TypeScript types.                                                            |
+| `svgreact.native`              | `boolean` | `false`            | If true, generates a React Native compatible component.                                                            |
+| `svgreact.memo`                | `boolean` | `false`            | If true, wraps the generated component in `React.memo()`.                                                          |
+| `svgreact.ref`                 | `boolean` | `false`            | If true, forwards a `ref` to the underlying SVG element.                                                           |
+| `svgreact.icon`                | `boolean` | `true`             | If true, applies `1em` height and width for easy icon scaling.                                                     |
+| `svgreact.expandProps`         | `boolean` | `true`             | If true, adds `{...props}` to the SVG element to allow passing extra props.                                        |
+| `svgreact.titleProp`           | `boolean` | `false`            | If true, adds a `title` prop to the component for accessibility.                                                   |
+| `svgreact.exportType`          | `string`  | `default`          | Set to `named` for a named export instead of a default export.                                                     |
+| `svgreact.namedExport`         | `string`  | `"ReactComponent"` | The name to use for the component when `exportType` is 'named'.                                                    |
+| `svgreact.componentNamePrefix` | `string`  | `""`               | A prefix to add to all generated component names (e.g., setting to `"Icon"` will turn `user.svg` into `IconUser`). |
 
 ### Example Configuration (`.vscode/settings.json`)
 
@@ -65,7 +68,8 @@ Customize the extension's behavior by adding these settings to your user or work
   "svgreact.outputDir": "src/components/icons",
   "svgreact.typescript": true,
   "svgreact.componentNamePrefix": "Icon",
-  "svgreact.memo": true
+  "svgreact.memo": true,
+  "svgreact.titleProp": true
 }
 ```
 
@@ -95,6 +99,8 @@ Customize the extension's behavior by adding these settings to your user or work
 
 - **New Feature:** Added advanced interactive previews for existing React components and selected SVG code.
 - **New Feature:** Preview webview now supports zoom and pan.
+- **New Feature:** Added `namedExport`, `titleProp`, and `expandProps` settings for more granular control over component generation.
+- **Fix:** Improved preview rendering for complex SVGs.
 
 ### 1.0.0 - 1.0.4
 
