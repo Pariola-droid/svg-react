@@ -57,6 +57,7 @@ Customize the extension's behavior by adding these settings to your user or work
 | `svgreact.icon`                | `boolean` | `true`             | If true, applies `1em` height and width for easy icon scaling.                                                     |
 | `svgreact.expandProps`         | `boolean` | `true`             | If true, adds `{...props}` to the SVG element to allow passing extra props.                                        |
 | `svgreact.titleProp`           | `boolean` | `false`            | If true, adds a `title` prop to the component for accessibility.                                                   |
+| `svgreact.descProp`            | `boolean` | `false`            | If true, adds a `desc` prop for a longer, more detailed description.                                               |
 | `svgreact.exportType`          | `string`  | `default`          | Set to `named` for a named export instead of a default export.                                                     |
 | `svgreact.namedExport`         | `string`  | `"ReactComponent"` | The name to use for the component when `exportType` is 'named'.                                                    |
 | `svgreact.componentNamePrefix` | `string`  | `""`               | A prefix to add to all generated component names (e.g., setting to `"Icon"` will turn `user.svg` into `IconUser`). |
@@ -99,7 +100,7 @@ Customize the extension's behavior by adding these settings to your user or work
 
 - **New Feature:** Added advanced interactive previews for existing React components and selected SVG code.
 - **New Feature:** Preview webview now supports zoom and pan.
-- **New Feature:** Added `namedExport`, `titleProp`, and `expandProps` settings for more granular control over component generation.
+- **New Feature:** Added `namedExport`, `titleProp`, `descProp`, and `expandProps` settings for more granular control over component generation.
 - **Fix:** Improved preview rendering for complex SVGs.
 
 ### 1.0.0 - 1.0.4

@@ -33,6 +33,7 @@ export async function convertSvgToComponent(uri: vscode.Uri) {
     namedExport: config.get<string>('namedExport', 'ReactComponent'),
     expandProps: config.get<boolean>('expandProps', true),
     titleProp: config.get<boolean>('titleProp', false),
+    descProp: config.get<boolean>('descProp', false),
     plugins: [svgo, jsx, prettier],
   };
 

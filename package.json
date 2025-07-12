@@ -140,6 +140,11 @@
           "default": false,
           "description": "Add a `title` prop to the component for the SVG's <title> element (for accessibility)."
         },
+        "svgreact.descProp": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add a `desc` prop to the component for the SVG's <desc> element (for accessibility)."
+        },
         "svgreact.exportType": {
           "type": "string",
           "enum": [
