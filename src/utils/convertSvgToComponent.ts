@@ -24,7 +24,7 @@ export async function convertSvgToComponent(uri: vscode.Uri) {
 
   const svgrOptions = {
     native: useNative,
-    icon: config.get<boolean>('icon', true),
+    icon: config.get<boolean>('icon', false),
     memo: config.get<boolean>('memo', false),
     ref: config.get<boolean>('ref', false),
     typescript: useTypescript,

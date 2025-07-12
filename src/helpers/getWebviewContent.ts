@@ -5,6 +5,14 @@
  */
 
 export function getWebviewContent(svgContent: string): string {
+  const sanitizedSvg = svgContent
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/ on\w+="[^"]*"/g, '');
+
+  //  <img id="svg-image" src="data:image/svg+xml;base64,${Buffer.from(
+  //           svgContent
+  //         ).toString('base64')}" />
+
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -31,9 +39,10 @@ export function getWebviewContent(svgContent: string): string {
         #container.grabbing {
             cursor: grabbing;
         }
-        img {
-          max-width: 90%;
-          max-height: 90%;
+        svg {
+          width: 90%;
+          height: 90%;
+          object-fit: contain;
           transition: transform 0.1s ease-out;
           transform-origin: center center;
         }
@@ -41,63 +50,75 @@ export function getWebviewContent(svgContent: string): string {
   </head>
   <body>
       <div id="container">
-        <img id="svg-image" src="data:image/svg+xml;base64,${Buffer.from(
-          svgContent
-        ).toString('base64')}" />
+        ${sanitizedSvg}
       </div>
 
       <script>
         const container = document.getElementById('container');
-        const image = document.getElementById('svg-image');
+        const svg = document.querySelector('svg');
 
-        let scale = 1;
-        let isPanning = false;
-        let startX = 0;
-        let startY = 0;
-        let translateX = 0;
-        let translateY = 0;
+        if (svg) {
+          let scale = 1;
+          let isPanning = false;
+          let startX = 0;
+          let startY = 0;
+          let translateX = 0;
+          let translateY = 0;
 
-        function applyTransform() {
-            image.style.transform = \`translate(\${translateX}px, \${translateY}px) scale(\${scale})\`;
+          const viewBox = svg.getAttribute('view-box');
+          if (viewBox) {
+            const parts = viewBox.split(' ');
+            const width = parseFloat(parts[2]);
+            const height = parseFloat(parts[3]);
+                if (width > 0 && height > 0) {
+                    svg.style.aspectRatio = \`\${width} / \${height}\`;
+                }
+          }
+
+         
         }
-
-        container.addEventListener('wheel', (event) => {
-            event.preventDefault();
-            const scaleAmount = 0.1;
-            if (event.deltaY < 0) {
-                scale += scaleAmount;
-            } else {
-                scale = Math.max(0.1, scale - scaleAmount);
-            }
-            applyTransform();
-        });
-
-        container.addEventListener('mousedown', (event) => {
-            isPanning = true;
-            container.classList.add('grabbing');
-            startX = event.pageX - translateX;
-            startY = event.pageY - translateY;
-        });
-
-        container.addEventListener('mouseup', () => {
-            isPanning = false;
-            container.classList.remove('grabbing');
-        });
-
-        container.addEventListener('mouseleave', () => {
-            isPanning = false;
-            container.classList.remove('grabbing');
-        });
-
-        container.addEventListener('mousemove', (event) => {
-            if (isPanning) {
-                translateX = event.pageX - startX;
-                translateY = event.pageY - startY;
-                applyTransform();
-            }
-        });
-
       </script>
   </body>
   </html>`;
 }
+
+// disabled zoom and pan func for now
+// function applyTransform() {
+//     svg.style.transform = \`translate(\${translateX}px, \${translateY}px) scale(\${scale})\`;
+// }
+
+// container.addEventListener('wheel', (event) => {
+//     event.preventDefault();
+//     const scaleAmount = 0.05;
+//     if (event.deltaY < 0) {
+//         scale += scaleAmount;
+//     } else {
+//         scale = Math.max(0.05, scale - scaleAmount);
+//     }
+//     applyTransform();
+// });
+
+// container.addEventListener('mousedown', (event) => {
+//     isPanning = true;
+//     container.classList.add('grabbing');
+//     startX = event.pageX - translateX;
+//     startY = event.pageY - translateY;
+// });
+
+// container.addEventListener('mouseup', () => {
+//     isPanning = false;
+//     container.classList.remove('grabbing');
+// });
+
+// container.addEventListener('mouseleave', () => {
+//     isPanning = false;
+//     container.classList.remove('grabbing');
+// });
+
+// container.addEventListener('mousemove', (event) => {
+//     if (isPanning) {
+//         translateX = event.pageX - startX;
+//         translateY = event.pageY - startY;
+//         applyTransform();
+//     }
+// });

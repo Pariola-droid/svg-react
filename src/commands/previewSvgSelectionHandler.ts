@@ -36,7 +36,7 @@ export async function previewSvgSelectionHandler() {
         'svgSelectionPreview',
         'Preview: Selection',
         vscode.ViewColumn.Beside,
-        {}
+        { enableScripts: true }
       );
       panel.webview.html = getWebviewContent(svgString);
     } else {

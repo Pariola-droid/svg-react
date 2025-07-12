@@ -37,7 +37,7 @@ export async function previewSvgComponentHandler(uri: vscode.Uri) {
         'svgComponentPreview',
         `Preview: ${path.basename(uri.fsPath)}`,
         vscode.ViewColumn.One,
-        {}
+        { enableScripts: true }
       );
       panel.webview.html = getWebviewContent(svgString);
     } else {

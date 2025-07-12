@@ -18,7 +18,7 @@ export async function previewFileHandler(uri: vscode.Uri) {
     'svgPreview',
     `Preview: ${path.basename(uri.fsPath)}`,
     vscode.ViewColumn.One,
-    {}
+    { enableScripts: true }
   );
 
   try {

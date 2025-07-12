@@ -17,6 +17,11 @@ export function jsxToSvgString(node: t.JSXElement): string {
     if (t.isJSXAttribute(attr)) {
       const name = attr.name.name as string;
 
+      // SVG scales correctly in webview [preview]
+      if (tagName === 'svg' && (name === 'width' || name === 'height')) {
+        return;
+      }
+
       const svgAttrName = name.replace(
         /[A-Z]/g,
         (letter) => `-${letter.toLowerCase()}`
