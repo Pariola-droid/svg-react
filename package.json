@@ -2,7 +2,7 @@
   "name": "svgreact",
   "displayName": "SVGReact",
   "description": "This extension provides the functionality of react-svgr directly within the editor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "pariola-droid",
   "icon": "images/icon.png",
   "repository": "https://github.com/Pariola-droid/svg-react",
