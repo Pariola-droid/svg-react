@@ -66,13 +66,15 @@ export function getWebviewContent(svgContent: string): string {
           const viewBox = svg.getAttribute('view-box');
           if (viewBox) {
             const parts = viewBox.split(' ');
-            const width = parseFloat(parts[2]);
-            const height = parseFloat(parts[3]);
-                if (width > 0 && height > 0) {
-                    svg.style.width = \`\${width}px\`;
-                    svg.style.height = \`\${height}px\`;
-                    svg.style.aspectRatio = \`\${width} / \${height}\`;
-                }
+             if (parts.length === 4) {
+              const width = parseFloat(parts[2]);
+              const height = parseFloat(parts[3]);
+                  if (width > 0 && height > 0) {
+                      svg.style.width = \`\${width}px\`;
+                      svg.style.height = \`\${height}px\`;
+                      svg.style.aspectRatio = \`\${width} / \${height}\`;
+                  }
+            }
           }
 
           function applyTransform() {
