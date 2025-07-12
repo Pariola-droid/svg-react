@@ -1,14 +1,14 @@
 {
   "name": "svgreact",
   "displayName": "SVGReact",
-  "description": "This extension provides the functionality of react-svgr directly within the editor",
+  "description": "Seamless SVG workflows inside VS Code, built on the amazing [@svgr/core]",
   "version": "1.1.1",
   "publisher": "pariola-droid",
   "icon": "images/icon.png",
   "repository": "https://github.com/Pariola-droid/svg-react",
   "license": "MIT",
   "engines": {
-    "vscode": "^1.101.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Programming Languages",
