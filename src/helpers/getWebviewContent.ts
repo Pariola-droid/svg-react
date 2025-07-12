@@ -88,7 +88,7 @@ export function getWebviewContent(svgContent: string): string {
               } else {
                   scale = Math.max(0.05, scale - scaleAmount);
               }
-              scale = Math.min(scale, 5); 
+              scale = Math.min(scale, 8); 
               applyTransform();
           });
 
