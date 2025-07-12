@@ -75,7 +75,36 @@ export function getWebviewContent(svgContent: string): string {
                 }
           }
 
-         
+          function applyTransform() {
+            svg.style.transform = \`translate(\${translateX}px, \${translateY}px) scale(\${scale})\`;
+          }
+
+
+
+          container.addEventListener('mousedown', (event) => {
+              isPanning = true;
+              container.classList.add('grabbing');
+              startX = event.pageX - translateX;
+              startY = event.pageY - translateY;
+          });
+
+          container.addEventListener('mouseup', () => {
+              isPanning = false;
+              container.classList.remove('grabbing');
+          });
+
+          container.addEventListener('mouseleave', () => {
+              isPanning = false;
+              container.classList.remove('grabbing');
+          });
+
+          container.addEventListener('mousemove', (event) => {
+              if (isPanning) {
+                  translateX = event.pageX - startX;
+                  translateY = event.pageY - startY;
+                  applyTransform();
+              }
+          });
         }
       </script>
   </body>
