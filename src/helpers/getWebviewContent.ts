@@ -88,7 +88,7 @@ export function getWebviewContent(svgContent: string): string {
               if (event.deltaY < 0) {
                   scale += scaleAmount;
               } else {
-                  scale = Math.max(0.05, scale - scaleAmount);
+                  scale = Math.max(1, scale - scaleAmount);
               }
               scale = Math.min(scale, 8); 
               applyTransform();
