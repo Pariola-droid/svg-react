@@ -169,6 +169,7 @@
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
+    "vsix": "npx @vscode/vsce package",
     "compile": "yarn run check-types && yarn run lint && node esbuild.js",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
